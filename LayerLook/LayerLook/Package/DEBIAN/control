@@ -1,0 +1,9 @@
+Package: com.lixy.LayerLook
+Name: LayerLook
+Depends: mobilesubstrate
+Version: 0.1-1
+Architecture: iphoneos-arm
+Description: Enable checking layer in every app
+Maintainer: KeepYounger
+Author: lixy
+Section: Tweaks
