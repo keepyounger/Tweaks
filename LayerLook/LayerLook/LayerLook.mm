@@ -13,8 +13,6 @@
 #error Do not support the simulator, please use the real iPhone Device.
 #endif
 
-#import <Foundation/Foundation.h>
-#import "CaptainHook/CaptainHook.h"
 #import <UIKit/UIKit.h>
 
 @interface NSObject(LayerLook)
