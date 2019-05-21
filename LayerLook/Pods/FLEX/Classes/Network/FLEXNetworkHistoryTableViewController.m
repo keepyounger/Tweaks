@@ -14,6 +14,17 @@
 #import "FLEXNetworkObserver.h"
 #import "FLEXNetworkSettingsTableViewController.h"
 
+@implementation FLEXNavigationController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.delegate = self;
+    [self.navigationBar setTranslucent:NO];
+}
+
+@end
+
 @interface FLEXNetworkHistoryTableViewController () <UISearchResultsUpdating, UISearchControllerDelegate>
 
 /// Backing model
@@ -43,7 +54,7 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTapped:)];
 
         // Needed to avoid search bar showing over detail pages pushed on the nav stack
-        // see http://asciiwwdc.com/2014/sessions/228
+        // see https://asciiwwdc.com/2014/sessions/228
         self.definesPresentationContext = YES;
     }
     return self;
@@ -66,6 +77,7 @@
     self.searchController.delegate = self;
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.tableView.tableHeaderView = self.searchController.searchBar;
 
     [self updateTransactions];
@@ -76,7 +88,7 @@
     FLEXNetworkSettingsTableViewController *settingsViewController = [[FLEXNetworkSettingsTableViewController alloc] init];
     settingsViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(settingsViewControllerDoneTapped:)];
     settingsViewController.title = @"Network Debugging Settings";
-    UINavigationController *wrapperNavigationController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
+    FLEXNavigationController *wrapperNavigationController = [[FLEXNavigationController alloc] initWithRootViewController:settingsViewController];
     [self presentViewController:wrapperNavigationController animated:YES completion:nil];
 }
 
@@ -224,7 +236,7 @@
     for (FLEXNetworkTransactionTableViewCell *cell in [self.tableView visibleCells]) {
         if ([cell.transaction isEqual:transaction]) {
             // Using -[UITableView reloadRowsAtIndexPaths:withRowAnimation:] is overkill here and kicks off a lot of
-            // work that can make the table view somewhat unresponseive when lots of updates are streaming in.
+            // work that can make the table view somewhat unresponsive when lots of updates are streaming in.
             // We just need to tell the cell that it needs to re-layout.
             [cell setNeedsLayout];
             break;

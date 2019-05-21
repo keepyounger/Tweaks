@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@interface FLEXNavigationController : UINavigationController<UINavigationControllerDelegate>
+
+@end
+
 @interface FLEXNetworkHistoryTableViewController : UITableViewController
 
 @end

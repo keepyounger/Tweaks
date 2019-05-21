@@ -1,5 +1,5 @@
 PODS:
-  - FLEX (2.4.0)
+  - FLEX (3.0.0)
 
 DEPENDENCIES:
   - FLEX (from `https://github.com/keepyounger/FLEX.git`)
@@ -10,12 +10,12 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FLEX:
-    :commit: 30780f280b37f7bb49e64038f5efbdc0db5b2097
+    :commit: c45f1954beb76285c8cc54db749591d3e5c96c6d
     :git: https://github.com/keepyounger/FLEX.git
 
 SPEC CHECKSUMS:
-  FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
+  FLEX: e9e52cb8d6f769d9ae25a4ff90142e9d1a614585
 
-PODFILE CHECKSUM: 0d31d19b0683502d999f27bfda8c17f8df52c2a2
+PODFILE CHECKSUM: 1111668b278f0a009d708b577102a5be868bdd7e
 
 COCOAPODS: 1.6.1

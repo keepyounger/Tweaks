@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5A885E88222143A7000BED9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A885E87222143A7000BED9B /* Foundation.framework */; };
 		5A885E90222143A7000BED9B /* LayerLook.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A885E8F222143A7000BED9B /* LayerLook.mm */; };
-		5A885E9B22214530000BED9B /* libFLEX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A885E9A22214530000BED9B /* libFLEX.a */; };
 		F3312839BCE4BE87667F3CA3 /* libPods-LayerLook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C71865E2DEB06462349EBEC2 /* libPods-LayerLook.a */; };
 /* End PBXBuildFile section */
 
@@ -21,7 +20,6 @@
 		5A885E8E222143A7000BED9B /* LayerLook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LayerLook-Prefix.pch"; sourceTree = "<group>"; };
 		5A885E8F222143A7000BED9B /* LayerLook.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LayerLook.mm; sourceTree = "<group>"; };
 		5A885E94222143A7000BED9B /* LayerLook.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = LayerLook.plist; path = Package/Library/MobileSubstrate/DynamicLibraries/LayerLook.plist; sourceTree = "<group>"; };
-		5A885E9A22214530000BED9B /* libFLEX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFLEX.a; sourceTree = "<group>"; };
 		C322C5AA27730426BE72A340 /* Pods-LayerLook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LayerLook.release.xcconfig"; path = "Target Support Files/Pods-LayerLook/Pods-LayerLook.release.xcconfig"; sourceTree = "<group>"; };
 		C71865E2DEB06462349EBEC2 /* libPods-LayerLook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LayerLook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -33,7 +31,6 @@
 			files = (
 				5A885E88222143A7000BED9B /* Foundation.framework in Frameworks */,
 				F3312839BCE4BE87667F3CA3 /* libPods-LayerLook.a in Frameworks */,
-				5A885E9B22214530000BED9B /* libFLEX.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +68,6 @@
 			isa = PBXGroup;
 			children = (
 				5A885E8F222143A7000BED9B /* LayerLook.mm */,
-				5A885E9A22214530000BED9B /* libFLEX.a */,
 				5A885E8A222143A7000BED9B /* Package */,
 				5A885E8D222143A7000BED9B /* Supporting Files */,
 			);
@@ -236,7 +232,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/MonkeyDev/bin/md --xcbp";
+			shellScript = "/opt/MonkeyDev/bin/md --xcbp\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -317,10 +313,16 @@
 			baseConfigurationReference = C322C5AA27730426BE72A340 /* Pods-LayerLook.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R9FM9QJB4R;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LayerLook",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LayerLook/LayerLook-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -335,13 +337,14 @@
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
-				MonkeyDevDeviceIP = "";
-				MonkeyDevDevicePassword = "";
+				MonkeyDevDeviceIP = 192.168.20.176;
+				MonkeyDevDevicePassword = alpine;
 				MonkeyDevDevicePort = "";
 				MonkeyDevInstallOnAnyBuild = YES;
 				MonkeyDevInstallOnProfiling = YES;
 				MonkeyDevkillProcessOnInstall = SpringBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -351,10 +354,16 @@
 			baseConfigurationReference = 3C5A9DF860BAF2501F2C3D49 /* Pods-LayerLook.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R9FM9QJB4R;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LayerLook",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LayerLook/LayerLook-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -369,13 +378,14 @@
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
-				MonkeyDevDeviceIP = "";
-				MonkeyDevDevicePassword = "";
+				MonkeyDevDeviceIP = 192.168.20.176;
+				MonkeyDevDevicePassword = alpine;
 				MonkeyDevDevicePort = "";
 				MonkeyDevInstallOnAnyBuild = YES;
 				MonkeyDevInstallOnProfiling = YES;
 				MonkeyDevkillProcessOnInstall = SpringBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

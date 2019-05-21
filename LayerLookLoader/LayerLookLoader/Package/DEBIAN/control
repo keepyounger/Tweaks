@@ -1,0 +1,9 @@
+Package: com.lixy.LayerLookLoader
+Name: LayerLook
+Depends: mobilesubstrate
+Version: 1.0
+Architecture: iphoneos-arm
+Description: 四指长按开启/关闭APP内调试（FLEX）
+Maintainer: KeepYounger
+Author: lixy
+Section: Tweaks

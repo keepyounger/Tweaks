@@ -5,9 +5,7 @@
 	<key>Filter</key>
 	<dict>
 		<key>Bundles</key>
-		<array>
-			<string>com.apple.Security</string>
-		</array>
+		<array/>
 	</dict>
 </dict>
 </plist>

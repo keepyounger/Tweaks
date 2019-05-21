@@ -34,12 +34,12 @@
 + (NSString *)applicationImageName;
 + (NSString *)applicationName;
 + (NSString *)safeDescriptionForObject:(id)object;
++ (NSString *)addressOfObject:(id)object;
 + (UIFont *)defaultFontOfSize:(CGFloat)size;
 + (UIFont *)defaultTableViewCellLabelFont;
 + (NSString *)stringByEscapingHTMLEntitiesInString:(NSString *)originalString;
 + (UIInterfaceOrientationMask)infoPlistSupportedInterfaceOrientationsMask;
 + (NSString *)searchBarPlaceholderText;
-+ (BOOL)isImagePathExtension:(NSString *)extension;
 + (UIImage *)thumbnailedImageWithMaxPixelDimension:(NSInteger)dimension fromImageData:(NSData *)data;
 + (NSString *)stringFromRequestDuration:(NSTimeInterval)duration;
 + (NSString *)statusCodeStringFromURLResponse:(NSURLResponse *)response;
@@ -50,6 +50,8 @@
 + (NSData *)inflatedDataFromCompressedData:(NSData *)compressedData;
 
 + (NSArray<UIWindow *> *)allWindows;
+
++ (void)alert:(NSString *)title message:(NSString *)message from:(UIViewController *)viewController;
 
 // Swizzling utilities
 

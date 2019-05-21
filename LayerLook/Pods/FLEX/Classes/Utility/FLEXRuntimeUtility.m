@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FLEXRuntimeUtility.h"
+#import "FLEXObjcInternal.h"
 
-// See https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html#//apple_ref/doc/uid/TP40008048-CH101-SW6
+// See https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html#//apple_ref/doc/uid/TP40008048-CH101-SW6
 NSString *const kFLEXUtilityAttributeTypeEncoding = @"T";
 NSString *const kFLEXUtilityAttributeBackingIvar = @"V";
 NSString *const kFLEXUtilityAttributeReadOnly = @"R";
@@ -35,6 +36,57 @@ const unsigned int kFLEXNumberOfImplicitArgs = 2;
 
 @implementation FLEXRuntimeUtility
 
+
+#pragma mark - General Helpers (Public)
+
++ (BOOL)pointerIsValidObjcObject:(const void *)pointer
+{
+    return FLEXPointerIsValidObjcObject(pointer);
+}
+
++ (id)potentiallyUnwrapBoxedPointer:(id)returnedObjectOrNil type:(const FLEXTypeEncoding *)returnType
+{
+    if (!returnedObjectOrNil) {
+        return nil;
+    }
+    
+    NSInteger i = 0;
+    if (returnType[i] == FLEXTypeEncodingConst) {
+        i++;
+    }
+    
+    BOOL returnsObjectOrClass = returnType[i] == FLEXTypeEncodingObjcObject ||
+                                returnType[i] == FLEXTypeEncodingObjcClass;
+    BOOL returnsVoidPointer   = returnType[i] == FLEXTypeEncodingPointer &&
+                                returnType[i+1] == FLEXTypeEncodingVoid;
+    BOOL returnsCString       = returnType[i] == FLEXTypeEncodingCString;
+    
+    // If we got back an NSValue and the return type is not an object,
+    // we check to see if the pointer is of a valid object. If not,
+    // we just display the NSValue.
+    if (!returnsObjectOrClass) {
+        // Can only be NSValue since return type is not an object,
+        // so we bail if this doesn't add up
+        if (![returnedObjectOrNil isKindOfClass:[NSValue class]]) {
+            return returnedObjectOrNil;
+        }
+        
+        NSValue *value = (NSValue *)returnedObjectOrNil;
+        
+        if (returnsCString) {
+            // Wrap char * in NSString
+            const char *string = (const char *)value.pointerValue;
+            returnedObjectOrNil = [NSString stringWithCString:string encoding:NSUTF8StringEncoding];
+        } else if (returnsVoidPointer) {
+            // Cast valid objects disguised as void * to id
+            if ([FLEXRuntimeUtility pointerIsValidObjcObject:value.pointerValue]) {
+                returnedObjectOrNil = (__bridge id)value.pointerValue;
+            }
+        }
+    }
+    
+    return returnedObjectOrNil;
+}
 
 #pragma mark - Property Helpers (Public)
 
@@ -285,7 +337,7 @@ const unsigned int kFLEXNumberOfImplicitArgs = 2;
     
     // this is a workaround cause method_getNumberOfArguments() returns wrong number for some methods
     if (selectorComponents.count == 1) {
-        return [selectorComponents copy];
+        return @[];
     }
     
     if ([selectorComponents.lastObject isEqualToString:@""]) {
@@ -301,6 +353,11 @@ const unsigned int kFLEXNumberOfImplicitArgs = 2;
     }
     
     return components;
+}
+
++ (FLEXTypeEncoding *)returnTypeForMethod:(Method)method
+{
+    return (FLEXTypeEncoding *)method_copyReturnType(method);
 }
 
 
@@ -347,69 +404,70 @@ const unsigned int kFLEXNumberOfImplicitArgs = 2;
                 // Ensure that the type encoding on the NSValue matches the type encoding of the argument in the method signature
                 if (strcmp([argumentValue objCType], typeEncodingCString) != 0) {
                     if (error) {
-                        NSDictionary<NSString *, id> *userInfo = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Type encoding mismatch for agrument at index %lu. Value type: %s; Method argument type: %s.", (unsigned long)argumentsArrayIndex, [argumentValue objCType], typeEncodingCString]};
+                        NSDictionary<NSString *, id> *userInfo = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Type encoding mismatch for argument at index %lu. Value type: %s; Method argument type: %s.", (unsigned long)argumentsArrayIndex, [argumentValue objCType], typeEncodingCString]};
                         *error = [NSError errorWithDomain:FLEXRuntimeUtilityErrorDomain code:FLEXRuntimeUtilityErrorCodeArgumentTypeMismatch userInfo:userInfo];
                     }
                     return nil;
                 }
                 
-                NSUInteger bufferSize = 0;
                 @try {
+                    NSUInteger bufferSize = 0;
+                    
                     // NSGetSizeAndAlignment barfs on type encoding for bitfields.
                     NSGetSizeAndAlignment(typeEncodingCString, &bufferSize, NULL);
+                    
+                    if (bufferSize > 0) {
+                        void *buffer = calloc(bufferSize, 1);
+                        [argumentValue getValue:buffer];
+                        [invocation setArgument:buffer atIndex:argumentIndex];
+                        free(buffer);
+                    }
                 } @catch (NSException *exception) { }
-                
-                if (bufferSize > 0) {
-                    void *buffer = calloc(bufferSize, 1);
-                    [argumentValue getValue:buffer];
-                    [invocation setArgument:buffer atIndex:argumentIndex];
-                    free(buffer);
-                }
             }
         }
     }
     
     // Try to invoke the invocation but guard against an exception being thrown.
-    BOOL successfullyInvoked = NO;
+    id returnObject = nil;
     @try {
         // Some methods are not fit to be called...
         // Looking at you -[UIResponder(UITextInputAdditions) _caretRect]
         [invocation invoke];
-        successfullyInvoked = YES;
+        
+        // Retrieve the return value and box if necessary.
+        const char *returnType = [methodSignature methodReturnType];
+        
+        if (returnType[0] == @encode(id)[0] || returnType[0] == @encode(Class)[0]) {
+            // Return value is an object.
+            __unsafe_unretained id objectReturnedFromMethod = nil;
+            [invocation getReturnValue:&objectReturnedFromMethod];
+            returnObject = objectReturnedFromMethod;
+        } else if (returnType[0] != @encode(void)[0]) {
+            // Will use arbitrary buffer for return value and box it.
+            void *returnValue = malloc([methodSignature methodReturnLength]);
+            
+            if (returnValue) {
+                [invocation getReturnValue:returnValue];
+                returnObject = [self valueForPrimitivePointer:returnValue objCType:returnType];
+                free(returnValue);
+            }
+        }
     } @catch (NSException *exception) {
         // Bummer...
         if (error) {
             // "… on <class>" / "… on instance of <class>"
             NSString *class = NSStringFromClass([object class]);
             NSString *calledOn = object == [object class] ? class : [@"an instance of " stringByAppendingString:class];
-
+            
             NSString *message = [NSString stringWithFormat:@"Exception '%@' thrown while performing selector '%@' on %@.\nReason:\n\n%@",
                                  exception.name,
                                  NSStringFromSelector(selector),
                                  calledOn,
                                  exception.reason];
-
+            
             *error = [NSError errorWithDomain:FLEXRuntimeUtilityErrorDomain
                                          code:FLEXRuntimeUtilityErrorCodeInvocationFailed
                                      userInfo:@{ NSLocalizedDescriptionKey : message }];
-        }
-    }
-    
-    // Retreive the return value and box if necessary.
-    id returnObject = nil;
-    if (successfullyInvoked) {
-        const char *returnType = [methodSignature methodReturnType];
-        if (returnType[0] == @encode(id)[0] || returnType[0] == @encode(Class)[0]) {
-            __unsafe_unretained id objectReturnedFromMethod = nil;
-            [invocation getReturnValue:&objectReturnedFromMethod];
-            returnObject = objectReturnedFromMethod;
-        } else if (returnType[0] != @encode(void)[0]) {
-            void *returnValue = malloc([methodSignature methodReturnLength]);
-            if (returnValue) {
-                [invocation getReturnValue:returnValue];
-                returnObject = [self valueForPrimitivePointer:returnValue objCType:returnType];
-                free(returnValue);
-            }
         }
     }
     
@@ -418,7 +476,7 @@ const unsigned int kFLEXNumberOfImplicitArgs = 2;
 
 + (BOOL)isTollFreeBridgedValue:(id)value forCFType:(const char *)typeEncoding
 {
-    // See https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html
+    // See https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html
 #define CASE(cftype, foundationClass) \
     if(strcmp(typeEncoding, @encode(cftype)) == 0) { \
         return [value isKindOfClass:[foundationClass class]]; \
@@ -488,7 +546,7 @@ const unsigned int kFLEXNumberOfImplicitArgs = 2;
     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
     NSNumber *number = [formatter numberFromString:inputString];
     
-    // Make sure we box the number with the correct type encoding so it can be propperly unboxed later via getValue:
+    // Make sure we box the number with the correct type encoding so it can be properly unboxed later via getValue:
     NSValue *value = nil;
     if (strcmp(typeEncoding, @encode(char)) == 0) {
         char primitiveValue = [number charValue];
@@ -557,7 +615,7 @@ const unsigned int kFLEXNumberOfImplicitArgs = 2;
                     NSString *typeEncoding = [@(structEncoding) substringWithRange:NSMakeRange(typeStart - structEncoding, nextTypeStart - typeStart)];
                     typeBlock(structName, [typeEncoding UTF8String], [self readableTypeForEncoding:typeEncoding], runningFieldIndex, runningFieldOffset);
                     runningFieldOffset += fieldSize;
-                    // Padding to keep propper alignment. __attribute((packed)) structs will break here.
+                    // Padding to keep proper alignment. __attribute((packed)) structs will break here.
                     // The type encoding is no different for packed structs, so it's not clear there's anything we can do for those.
                     if (runningFieldOffset % fieldAlignment != 0) {
                         runningFieldOffset += fieldAlignment - runningFieldOffset % fieldAlignment;
@@ -602,7 +660,7 @@ const unsigned int kFLEXNumberOfImplicitArgs = 2;
         return nil;
     }
     
-    // See https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+    // See https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
     // class-dump has a much nicer and much more complete implementation for this task, but it is distributed under GPLv2 :/
     // See https://github.com/nygard/class-dump/blob/master/Source/CDType.m
     // Warning: this method uses multiple middle returns and macros to cut down on boilerplate.

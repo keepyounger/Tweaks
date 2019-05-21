@@ -48,7 +48,7 @@
 + (UIViewController *)viewControllerForView:(UIView *)view
 {
     UIViewController *viewController = nil;
-    SEL viewDelSel = NSSelectorFromString([NSString stringWithFormat:@"%@ewDelegate", @"_vi"]);
+    SEL viewDelSel = NSSelectorFromString(@"_viewDelegate");
     if ([view respondsToSelector:viewDelSel]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -58,7 +58,8 @@
     return viewController;
 }
 
-+ (UIViewController *)viewControllerForAncestralView:(UIView *)view{
++ (UIViewController *)viewControllerForAncestralView:(UIView *)view
+{
     UIViewController *viewController = nil;
     SEL viewDelSel = NSSelectorFromString([NSString stringWithFormat:@"%@ewControllerForAncestor", @"_vi"]);
     if ([view respondsToSelector:viewDelSel]) {
@@ -124,6 +125,11 @@
         description = [object description];
     }
     return description;
+}
+
++ (NSString *)addressOfObject:(id)object
+{
+    return [NSString stringWithFormat:@"%p", object];
 }
 
 + (UIFont *)defaultFontOfSize:(CGFloat)size
@@ -192,12 +198,6 @@
     return @"Filter";
 }
 
-+ (BOOL)isImagePathExtension:(NSString *)extension
-{
-    // https://developer.apple.com/library/ios/documentation/uikit/reference/UIImage_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40006890-CH3-SW3
-    return [@[@"jpg", @"jpeg", @"png", @"gif", @"tiff", @"tif"] containsObject:extension];
-}
-
 + (UIImage *)thumbnailedImageWithMaxPixelDimension:(NSInteger)dimension fromImageData:(NSData *)data
 {
     UIImage *thumbnail = nil;
@@ -249,7 +249,8 @@
     return httpResponseString;
 }
 
-+ (BOOL)isErrorStatusCodeFromURLResponse:(NSURLResponse *)response {
++ (BOOL)isErrorStatusCodeFromURLResponse:(NSURLResponse *)response
+{
     NSIndexSet *errorStatusCodes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(400, 200)];
     
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
@@ -259,7 +260,6 @@
     
     return NO;
 }
-
 
 + (NSDictionary<NSString *, id> *)dictionaryFromQuery:(NSString *)query
 {
@@ -313,7 +313,7 @@
 }
 
 // Thanks to the following links for help with this method
-// http://www.cocoanetics.com/2012/02/decompressing-files-into-memory/
+// https://www.cocoanetics.com/2012/02/decompressing-files-into-memory/
 // https://github.com/nicklockwood/GZIP
 + (NSData *)inflatedDataFromCompressedData:(NSData *)compressedData
 {
@@ -355,6 +355,7 @@
     BOOL includeInternalWindows = YES;
     BOOL onlyVisibleWindows = NO;
 
+    // Obfuscating selector allWindowsIncludingInternalWindows:onlyVisibleWindows:
     NSArray<NSString *> *allWindowsComponents = @[@"al", @"lWindo", @"wsIncl", @"udingInt", @"ernalWin", @"dows:o", @"nlyVisi", @"bleWin", @"dows:"];
     SEL allWindowsSelector = NSSelectorFromString([allWindowsComponents componentsJoinedByString:@""]);
 
@@ -370,6 +371,15 @@
     __unsafe_unretained NSArray<UIWindow *> *windows = nil;
     [invocation getReturnValue:&windows];
     return windows;
+}
+
++ (void)alert:(NSString *)title message:(NSString *)message from:(UIViewController *)viewController
+{
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:message
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:@"Dismiss", nil] show];
 }
 
 + (SEL)swizzledSelectorForSelector:(SEL)selector

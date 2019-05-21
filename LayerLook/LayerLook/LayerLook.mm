@@ -28,9 +28,12 @@
 {
     [[NSNotificationCenter defaultCenter] addObserverForName:UIWindowDidBecomeVisibleNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification * _Nonnull note) {
         UIWindow *window = note.object;
-        UILongPressGestureRecognizer *lp = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showDebug:)];
-        lp.numberOfTouchesRequired = 4;
-        [window addGestureRecognizer:lp];
+        if (window.tag != 101) {
+            UILongPressGestureRecognizer *lp = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showDebug:)];
+            lp.numberOfTouchesRequired = 4;
+            window.tag = 101;
+            [window addGestureRecognizer:lp];
+        }
     }];
 }
 
