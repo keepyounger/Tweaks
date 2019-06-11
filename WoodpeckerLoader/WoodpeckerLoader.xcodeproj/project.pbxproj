@@ -1,0 +1,378 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5AB8E14122AF5EBD0081369F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AB8E14022AF5EBD0081369F /* Foundation.framework */; };
+		5AB8E14F22AF5EBD0081369F /* WoodpeckerLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AB8E14E22AF5EBD0081369F /* WoodpeckerLoader.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5AB8E13D22AF5EBD0081369F /* WoodpeckerLoader.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = WoodpeckerLoader.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AB8E14022AF5EBD0081369F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5AB8E14522AF5EBD0081369F /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = Package/DEBIAN/control; sourceTree = "<group>"; };
+		5AB8E14922AF5EBD0081369F /* WoodpeckerLoader.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = WoodpeckerLoader.plist; path = Package/Library/PreferenceLoader/Preferences/WoodpeckerLoader.plist; sourceTree = "<group>"; };
+		5AB8E14A22AF5EBD0081369F /* WoodpeckerLoaderIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WoodpeckerLoaderIcon@2x.png"; path = "Package/Library/PreferenceLoader/Preferences/WoodpeckerLoaderIcon@2x.png"; sourceTree = "<group>"; };
+		5AB8E14D22AF5EBD0081369F /* WoodpeckerLoader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WoodpeckerLoader-Prefix.pch"; sourceTree = "<group>"; };
+		5AB8E14E22AF5EBD0081369F /* WoodpeckerLoader.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WoodpeckerLoader.mm; sourceTree = "<group>"; };
+		5AB8E15222AF5EBD0081369F /* WoodpeckerLoader.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = WoodpeckerLoader.plist; path = Package/Library/MobileSubstrate/DynamicLibraries/WoodpeckerLoader.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5AB8E13922AF5EBD0081369F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AB8E14122AF5EBD0081369F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5AB8E13322AF5EBC0081369F = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14222AF5EBD0081369F /* WoodpeckerLoader */,
+				5AB8E13F22AF5EBD0081369F /* Frameworks */,
+				5AB8E13E22AF5EBD0081369F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5AB8E13E22AF5EBD0081369F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E13D22AF5EBD0081369F /* WoodpeckerLoader.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5AB8E13F22AF5EBD0081369F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14022AF5EBD0081369F /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5AB8E14222AF5EBD0081369F /* WoodpeckerLoader */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14E22AF5EBD0081369F /* WoodpeckerLoader.mm */,
+				5AB8E14322AF5EBD0081369F /* Package */,
+				5AB8E14C22AF5EBD0081369F /* Supporting Files */,
+			);
+			path = WoodpeckerLoader;
+			sourceTree = "<group>";
+		};
+		5AB8E14322AF5EBD0081369F /* Package */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14422AF5EBD0081369F /* DEBIAN */,
+				5AB8E14622AF5EBD0081369F /* Library */,
+			);
+			name = Package;
+			sourceTree = "<group>";
+		};
+		5AB8E14422AF5EBD0081369F /* DEBIAN */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14522AF5EBD0081369F /* control */,
+			);
+			name = DEBIAN;
+			sourceTree = "<group>";
+		};
+		5AB8E14622AF5EBD0081369F /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14722AF5EBD0081369F /* PreferenceLoader */,
+				5AB8E15022AF5EBD0081369F /* MobileSubstrate */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		5AB8E14722AF5EBD0081369F /* PreferenceLoader */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14822AF5EBD0081369F /* Preferences */,
+			);
+			name = PreferenceLoader;
+			sourceTree = "<group>";
+		};
+		5AB8E14822AF5EBD0081369F /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14922AF5EBD0081369F /* WoodpeckerLoader.plist */,
+				5AB8E14A22AF5EBD0081369F /* WoodpeckerLoaderIcon@2x.png */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		5AB8E14C22AF5EBD0081369F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E14D22AF5EBD0081369F /* WoodpeckerLoader-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5AB8E15022AF5EBD0081369F /* MobileSubstrate */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E15122AF5EBD0081369F /* DynamicLibraries */,
+			);
+			name = MobileSubstrate;
+			sourceTree = "<group>";
+		};
+		5AB8E15122AF5EBD0081369F /* DynamicLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				5AB8E15222AF5EBD0081369F /* WoodpeckerLoader.plist */,
+			);
+			name = DynamicLibraries;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5AB8E13A22AF5EBD0081369F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5AB8E13C22AF5EBD0081369F /* WoodpeckerLoader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5AB8E15522AF5EBD0081369F /* Build configuration list for PBXNativeTarget "WoodpeckerLoader" */;
+			buildPhases = (
+				5AB8E13822AF5EBD0081369F /* Sources */,
+				5AB8E13922AF5EBD0081369F /* Frameworks */,
+				5AB8E13A22AF5EBD0081369F /* Headers */,
+				5AB8E13B22AF5EBD0081369F /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WoodpeckerLoader;
+			productName = WoodpeckerLoader;
+			productReference = 5AB8E13D22AF5EBD0081369F /* WoodpeckerLoader.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5AB8E13422AF5EBC0081369F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				TargetAttributes = {
+					5AB8E13C22AF5EBD0081369F = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 5AB8E13722AF5EBC0081369F /* Build configuration list for PBXProject "WoodpeckerLoader" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5AB8E13322AF5EBC0081369F;
+			productRefGroup = 5AB8E13E22AF5EBD0081369F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5AB8E13C22AF5EBD0081369F /* WoodpeckerLoader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5AB8E13B22AF5EBD0081369F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/opt/MonkeyDev/bin/md --xcbp";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5AB8E13822AF5EBD0081369F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AB8E14F22AF5EBD0081369F /* WoodpeckerLoader.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5AB8E15322AF5EBD0081369F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(MonkeyDevPath)/frameworks/**",
+					"$(MonkeyDevTheosPath)/vendor/lib",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(MonkeyDevTheosPath)/vendor/include/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = "$(MonkeyDevTheosPath)/vendor/lib/**";
+				MonkeyDevPath = /opt/MonkeyDev;
+				MonkeyDevTheosPath = /opt/theos;
+				OTHER_CFLAGS = "-DTHEOS_INSTANCE_NAME=\"\\\"WoodpeckerLoader\\\"\"";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5AB8E15422AF5EBD0081369F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(MonkeyDevPath)/frameworks/**",
+					"$(MonkeyDevTheosPath)/vendor/lib",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(MonkeyDevTheosPath)/vendor/include/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = "$(MonkeyDevTheosPath)/vendor/lib/**";
+				MonkeyDevPath = /opt/MonkeyDev;
+				MonkeyDevTheosPath = /opt/theos;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-DTHEOS_INSTANCE_NAME=\"\\\"WoodpeckerLoader\\\"\"";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = NO;
+			};
+			name = Debug;
+		};
+		5AB8E15622AF5EBD0081369F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R9FM9QJB4R;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WoodpeckerLoader/WoodpeckerLoader-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(MonkeyDevPath)/include",
+					"$(MonkeyDevTheosPath)/vendor/include/**",
+				);
+				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
+				MonkeyDevBuildPackageOnAnyBuild = NO;
+				MonkeyDevClearUiCacheOnInstall = NO;
+				MonkeyDevCopyOnBuild = NO;
+				MonkeyDevDeviceIP = 192.168.20.176;
+				MonkeyDevDevicePassword = alpine;
+				MonkeyDevDevicePort = "";
+				MonkeyDevInstallOnAnyBuild = YES;
+				MonkeyDevInstallOnProfiling = YES;
+				MonkeyDevkillProcessOnInstall = SpringBoard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5AB8E15722AF5EBD0081369F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R9FM9QJB4R;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WoodpeckerLoader/WoodpeckerLoader-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(MonkeyDevPath)/include",
+					"$(MonkeyDevTheosPath)/vendor/include/**",
+				);
+				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
+				MonkeyDevBuildPackageOnAnyBuild = NO;
+				MonkeyDevClearUiCacheOnInstall = NO;
+				MonkeyDevCopyOnBuild = NO;
+				MonkeyDevDeviceIP = 192.168.20.176;
+				MonkeyDevDevicePassword = alpine;
+				MonkeyDevDevicePort = "";
+				MonkeyDevInstallOnAnyBuild = YES;
+				MonkeyDevInstallOnProfiling = YES;
+				MonkeyDevkillProcessOnInstall = SpringBoard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5AB8E13722AF5EBC0081369F /* Build configuration list for PBXProject "WoodpeckerLoader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AB8E15322AF5EBD0081369F /* Release */,
+				5AB8E15422AF5EBD0081369F /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5AB8E15522AF5EBD0081369F /* Build configuration list for PBXNativeTarget "WoodpeckerLoader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AB8E15622AF5EBD0081369F /* Release */,
+				5AB8E15722AF5EBD0081369F /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5AB8E13422AF5EBC0081369F /* Project object */;
+}

@@ -1,0 +1,9 @@
+Package: com.lixy.WoodpeckerLoader
+Name: WoodpeckerLoader
+Depends: mobilesubstrate
+Version: 1.0
+Architecture: iphoneos-arm
+Description: WoodpeckerLoader
+Maintainer: KeepYounger
+Author: lixy
+Section: Tweaks
