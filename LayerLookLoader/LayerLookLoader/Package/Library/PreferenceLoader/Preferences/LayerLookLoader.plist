@@ -67,7 +67,7 @@
 				<key>cell</key>
 				<string>PSGroupCell</string>
 				<key>footerText</key>
-				<string>四指长按开启/关闭APP内调试（FLEX，已更新到3.0）。</string>
+				<string>四指长按开启/关闭APP内调试（FLEX，已更新到4.0）。</string>
 			</dict>
 			<dict>
 				<key>cell</key>

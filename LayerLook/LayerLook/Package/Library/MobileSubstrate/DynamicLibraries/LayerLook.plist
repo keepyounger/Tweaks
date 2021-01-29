@@ -5,7 +5,9 @@
 	<key>Filter</key>
 	<dict>
 		<key>Bundles</key>
-		<array/>
+		<array>
+			<string>com.apple.UIKit</string>
+		</array>
 	</dict>
 </dict>
 </plist>

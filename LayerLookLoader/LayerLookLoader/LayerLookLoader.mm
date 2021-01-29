@@ -23,7 +23,7 @@ CHConstructor // code block that runs immediately upon load
     @autoreleasepool
     {
         NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.lixy.LayerLook.plist"];
-        NSString *libraryPath = @"/Library/MobileSubstrate/DynamicLibraries/LayerLook.dylib";
+        NSString *libraryPath = @"/var/mobile/Library/DynamicLibraries/LayerLook.dylib";
         if([[prefs objectForKey:[NSString stringWithFormat:@"LayerLookEnabled-%@", [[NSBundle mainBundle] bundleIdentifier]]] boolValue]) {
             if ([[NSFileManager defaultManager] fileExistsAtPath:libraryPath]){
                 void *addr = dlopen([libraryPath UTF8String], RTLD_NOW);
